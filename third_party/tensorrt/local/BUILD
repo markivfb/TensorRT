@@ -339,7 +339,7 @@ cc_library(
     srcs = select({
         ":aarch64_linux": ["lib/aarch64-linux-gnu/libnvinfer_plugin.so"],
         ":ci_rhel_x86_64_linux": ["lib64/libnvinfer_plugin.so"],
-        ":windows": ["lib/nvinfer_plugin.dll"],
+        ":windows": ["lib/nvinfer_plugin.lib", "lib/nvinfer_plugin.dll"],
         "//conditions:default": ["lib/x86_64-linux-gnu/libnvinfer_plugin.so"],
     }),
     hdrs = select({
@@ -367,6 +367,9 @@ cc_library(
         "nvinfer",
         "@cuda//:cudart",
         "@cudnn",
-    ],
+    ] + select({
+        ":windows": ["@cuda//:cublas", "nvinfer_static_lib"],
+        "//conditions:default": ["@cuda//:cublas"],
+    }),
     alwayslink = True,
 )

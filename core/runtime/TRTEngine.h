@@ -1,4 +1,7 @@
 #pragma once
+
+// Necessary for VS2017 to compile
+#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
 #include <experimental/filesystem>
 #include <fstream>
 #include <map>
